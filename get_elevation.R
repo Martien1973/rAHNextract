@@ -28,7 +28,7 @@ get_elevation_points <- function(name, X, Y, LONLAT = FALSE, AHN = "AHN3", dem =
   print(paste("Hoogte:", my_elevation, "m.", sep=" "))
   return (my_elevation)
 }
-points <- fread(file = "C:/Users/jelle/Documents/R/rAHNextract/coordinaten/coordinaten_Zwaanshoek.csv", data.table = FALSE)
+points <- fread(file = "C:/Users/jelle/Documents/R/rAHNextract/coordinaten/coordinaten.csv", data.table = FALSE)
 
 indiv_ID <- 47
 indiv_elevation <- get_elevation_points
@@ -43,4 +43,4 @@ results <- data.frame(points, elevation)
 colnames(results) <- c("ID", "X", "Y", "elevation")
 
 View(results)
-fwrite(results, "elevations_Zwaanshoek_2.csv")
+fwrite(results, "coordinates_elevations.csv")
