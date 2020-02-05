@@ -3,7 +3,7 @@ Extract elevations of single points in The Netherlands from the Actueel Hoogtebe
 
 Works with AHN1, AHN2 and AHN3
 
-Works with allavailable resolutions
+Works with all available resolutions
 
 Works with Digitale Terrain Model (DTM) and Digital Surface Model (DSM).
 
