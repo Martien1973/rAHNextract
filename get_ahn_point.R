@@ -55,5 +55,5 @@ get_ahn_point <- function(name = "", X, Y, LONLAT = FALSE, resolution){
   }
   
   bbox <- list("xmin"= my_xmin, "xmax"= my_xmax, "ymin" = my_ymin, "ymax" = my_ymax)
-  return(list("name" = name, "point" = point, "bbox" = bbox))
+  return(list("name" = name, "point" = spatialpoint, "bbox" = bbox))
 }
