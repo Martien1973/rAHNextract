@@ -28,17 +28,16 @@ get_elevation_points <- function(name, X, Y, LONLAT = FALSE, AHN = "AHN3", dem =
   print(paste("Hoogte:", my_elevation, "m.", sep=" "))
   return (my_elevation)
 }
-points <- fread(file = "C:/Users/jelle/Documents/R/rAHNextract/coordinaten/coordinaten.csv", data.table = FALSE)
+points <- fread(file = "coordinates.csv", data.table = FALSE)
 
 indiv_ID <- 47
-indiv_elevation <- get_elevation_points
-indiv_elevation <- get_elevation_points(name = "test", X = 103538, Y = 481494, resolution = 0.5, rm = FALSE)
+indiv_elevation <- get_elevation_points(name = points[indiv_ID, "ID"], X = points[indiv_ID, "X"], Y = points[indiv_ID, "Y"], resolution = 0.5, rm = TRUE)
 
-
+#indiv_elevation <- get_elevation_points(name = "test", X = 103538, Y = 481494, resolution = 0.5, rm = TRUE)
 indiv_result <- data.frame(points[indiv_ID,], indiv_elevation)
 View(indiv_result)
 
-elevation <- mapply(get_elevation_points, name = points$ID, X = points$X, Y = points$Y, resolution = 0.5, rm = FALSE)
+elevation <- mapply(get_elevation_points, name = points$ID, X = points$X, Y = points$Y, resolution = 0.5, rm = TRUE)
 results <- data.frame(points, elevation)
 colnames(results) <- c("ID", "X", "Y", "elevation")
 
