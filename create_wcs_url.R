@@ -25,7 +25,7 @@ create_wcs_url <- function(wcs_baseUrl = "https://geodata.nationaalgeoregister.n
   } else {
     underscore <- "_"
   }
-  name_layer_url <- paste0("COVERAGE=", tolower(AHN), "_" , resolution$res_name , underscore, dem)
+  name_layer_url <- paste0("COVERAGE=", tolower(AHN), "_" , my_resolution$res_name , underscore, dem)
   
   #wcs image format
   imgFormat_url <- "FORMAT=GEOTIFF_FLOAT32"
