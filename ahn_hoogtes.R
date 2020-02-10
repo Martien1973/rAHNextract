@@ -274,7 +274,7 @@ View(alle_hoogtes_tabel)
 colnames(alle_hoogtes_tabel) <- c("ID", "X", "Y", "elevation")
 
 #sla hoogtes op als .csv bestand. Bestand word opgelsagen in je working directory (die je hierboven hebt ingesteld met setwd())
-write.table(alle_hoogtes_tabel, "coordinates.csv", sep=",", col.names = FALSE)
+write.table(alle_hoogtes_tabel, "coordinates.csv", sep=",", col.names = TRUE, row.names = FALSE)
 
 
 
