@@ -1,7 +1,8 @@
 ##Author: Jelle Stuurman
 ##Updated: 05-02-2020
 
-ahn_hoogtes <- function(name, X, Y, LONLAT = FALSE, AHN = "AHN3", resolution = 0.5, dem = "dsm", interpolated = TRUE, rm = FALSE, type = "points"){
+ahn_h
+oogtes <- function(name, X, Y, LONLAT = FALSE, AHN = "AHN3", resolution = 0.5, dem = "dsm", interpolated = TRUE, rm = FALSE, type = "points"){
   ##functies##
   
   ##resolutie bepalen
@@ -207,7 +208,7 @@ ahn_hoogtes <- function(name, X, Y, LONLAT = FALSE, AHN = "AHN3", resolution = 0
   ##bereken AHN hoogte
   intersect_raster <- function(ras, point){
     print("Intersecting raster. Getting elevation...")
-    my_elevation <- raster::extract(ras, point)
+    my_elevation <- raster::extract(ras, point, method = "bilinear")
     return (my_elevation)
   }
   #Uitvoering van functies
