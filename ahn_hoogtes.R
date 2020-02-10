@@ -1,8 +1,7 @@
 ##Author: Jelle Stuurman
-##Updated: 05-02-2020
+##Updated: 10-02-2020
 
-ahn_h
-oogtes <- function(name, X, Y, LONLAT = FALSE, AHN = "AHN3", resolution = 0.5, dem = "dsm", interpolated = TRUE, rm = FALSE, type = "points"){
+ahn_hoogtes <- function(name, X, Y, LONLAT = FALSE, AHN = "AHN3", resolution = 0.5, dem = "dsm", interpolated = TRUE, rm = FALSE, type = "points"){
   ##functies##
   
   ##resolutie bepalen
@@ -259,7 +258,7 @@ setwd("C:/Users/jelle/Documents")
 
 ##punten inladen
 #zorg ervoor datt lijst de kolommen "ID", "X" en "Y" hebben. "ID is een unieke naam en tevens de naam van het raster dat je download.
-punten <- read.table("C:/Users/jelle/Documents/coordinaten.csv", header = TRUE, sep=",")
+punten <- read.table("C:/Users/jelle/Documents/coordinates.csv", header = TRUE, sep=",")
 
 ##bereken alle hoogtes van alle punten
 #zet AHN parameter op "AHN2" of "AHN3" om de AHN te bepalen.
@@ -275,7 +274,7 @@ alle_hoogtes_tabel <- data.frame(punten, alle_hoogtes)
 colnames(alle_hoogtes_tabel) <- c("ID", "X", "Y", "elevation")
 
 #sla hoogtes op als .csv bestand. Bestand word opgelsagen in je working directory (die je hierboven hebt ingesteld met setwd())
-write.table(alle_hoogtes_tabel, "coordinaten_elevations.csv", sep=",", col.names = TRUE)
+write.table(alle_hoogtes_tabel, "coordinates.csv", sep=",", col.names = TRUE)
 
 
 
