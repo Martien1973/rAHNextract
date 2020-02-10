@@ -269,12 +269,12 @@ punten <- read.table("C:/Users/jelle/Documents/coordinates.csv", header = TRUE, 
 
 alle_hoogtes <- mapply(ahn_hoogtes, name = punten$ID, X = punten$X, Y = punten$Y, LONLAT = FALSE, AHN =  "AHN3", resolution = 0.5,  dem = "dtm", interpolated = TRUE, rm = TRUE)
 #voeg resultaten samen met coordinaten in een tabel en maak kolom namen
-
 alle_hoogtes_tabel <- data.frame(punten, alle_hoogtes)
+View(alle_hoogtes_tabel)
 colnames(alle_hoogtes_tabel) <- c("ID", "X", "Y", "elevation")
 
 #sla hoogtes op als .csv bestand. Bestand word opgelsagen in je working directory (die je hierboven hebt ingesteld met setwd())
-write.table(alle_hoogtes_tabel, "coordinates.csv", sep=",", col.names = TRUE)
+write.table(alle_hoogtes_tabel, "coordinates.csv", sep=",", col.names = FALSE)
 
 
 
