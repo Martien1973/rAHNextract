@@ -1,4 +1,4 @@
-get_surrounding_ahn(X, Y, .LOLAT = FALSE, AHN = my_ahn, dem = dem, resolution = resolution, radius = 0, redownload = FALSE){
+get_surrounding_ahn <- function(X, Y, .LOLAT = FALSE, AHN = my_ahn, dem = dem, resolution = resolution, radius = 0, redownload = FALSE){
   
   #create point
   spatialpoint <- data.frame("X"=X,"Y"=Y)
