@@ -1,4 +1,4 @@
-get_elevation_points <- function(name, X, Y, LONLAT = FALSE, AHN = "AHN3", dem = "dsm", resolution, rm = FALSE, type = "points"){
+get_elevation_points <- function(name, X, Y, LONLAT = FALSE, AHN = "AHN3", dem = "dsm", resolution, rm = FALSE, type = "points", decimals = 2){
   
   #selected AHN layer
   ahn_lower <- tolower(AHN)
@@ -24,7 +24,7 @@ get_elevation_points <- function(name, X, Y, LONLAT = FALSE, AHN = "AHN3", dem =
   if(rm == TRUE){
     file.remove(my_raster$file)
   }
-  my_elevation <- format(round(my_elevation, 5), nsmall = 5)
+  my_elevation <- format(round(my_elevation, decimals), nsmall = decimals)
   print(paste("Hoogte:", my_elevation, "m.", sep=" "))
   return (my_elevation)
 }
@@ -37,7 +37,7 @@ indiv_elevation <- get_elevation_points(name = points[indiv_ID, "ID"], X = point
 indiv_result <- data.frame(points[indiv_ID,], indiv_elevation)
 View(indiv_result)
 
-elevation <- mapply(get_elevation_points, name = points$ID, X = points$X, Y = points$Y, resolution = 0.5, rm = TRUE)
+elevation <- mapply(get_elevation_points, name = points$ID, X = points$X, Y = points$Y, resolution = 0.5, rm = TRUE, decimals = 2)
 results <- data.frame(points, elevation)
 colnames(results) <- c("ID", "X", "Y", "elevation")
 

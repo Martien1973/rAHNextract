@@ -1,7 +1,7 @@
 ##Author: Jelle Stuurman
 ##Updated: 10-02-2020
 
-ahn_hoogtes <- function(name, X, Y, LONLAT = FALSE, AHN = "AHN3", resolution = 0.5, dem = "dsm", interpolated = TRUE, rm = FALSE, type = "points"){
+ahn_hoogtes <- function(name, X, Y, LONLAT = FALSE, AHN = "AHN3", resolution = 0.5, dem = "dsm", interpolated = TRUE, rm = FALSE, decimals = 2, type = "points"){
   ##functies##
   
   ##resolutie bepalen
@@ -198,7 +198,7 @@ ahn_hoogtes <- function(name, X, Y, LONLAT = FALSE, AHN = "AHN3", resolution = 0
     image <- download.file(wcsUrl, image_name)
     print("Download raster image succeeded.")
     my_raster <- raster(image_name)
-    NAvalue(my_raster) <- --32768.0
+    NAvalue(my_raster) <- -32768.0
     plot(my_raster, xlab="RD X", ylab="RD Y", main="Elevation (m)")
     ras <- list("raster" = my_raster, "file" = image_name)
     return(ras)
@@ -231,7 +231,8 @@ ahn_hoogtes <- function(name, X, Y, LONLAT = FALSE, AHN = "AHN3", resolution = 0
   if(rm == TRUE){
     file.remove(my_raster$file)
   }
-  my_elevation <- format(round(my_elevation, 5), nsmall = 5)
+  my_elevation <- format(round(my_elevation, decimals), nsmall = decimals)
+  my_elevation <- as.numeric(my_elevation)
   print(paste("Hoogte:", my_elevation, "m.", sep=" "))
   return (my_elevation)
 }
@@ -258,8 +259,8 @@ setwd("C:/Users/jelle/Documents")
 
 ##punten inladen
 #zorg ervoor datt lijst de kolommen "ID", "X" en "Y" hebben. "ID is een unieke naam en tevens de naam van het raster dat je download.
-punten <- read.table("C:/Users/jelle/Documents/coordinates.csv", header = TRUE, sep=",")
-
+punten <- read.table("C:/Users/jelle/Documents/coordinaten_Zwaanshoek.csv", header = TRUE, sep=",")
+View(punten)
 ##bereken alle hoogtes van alle punten
 #zet AHN parameter op "AHN2" of "AHN3" om de AHN te bepalen.
 #zet resolution parameter op 0.5 of 5, 25 of 100 om de resolutie van de AHN te bepalen. Niet alle resoluties zijn beschikbaar voor AHN1, AHN2 en AHN3.
@@ -267,16 +268,20 @@ punten <- read.table("C:/Users/jelle/Documents/coordinates.csv", header = TRUE, 
 #zet interpolated parameter op TRUE als je opgevulde gegevens wilt ophalen. Dit is alleen van toepassing wanneer AHN2 wordt gebruikt.
 #Zet rm parameter of FALSE als je NIET wilt dat de gedownloade rasters weer verwijderd worden van je computer nadat de analyse is uitgevoerd.
 
-alle_hoogtes <- mapply(ahn_hoogtes, name = punten$ID, X = punten$X, Y = punten$Y, LONLAT = FALSE, AHN =  "AHN3", resolution = 0.5,  dem = "dtm", interpolated = TRUE, rm = TRUE)
+alle_hoogtes <- mapply(ahn_hoogtes, name = punten$ID, X = punten$X, Y = punten$Y, LONLAT = FALSE, AHN =  "AHN3", resolution = 0.5,  dem = "dtm", interpolated = TRUE, rm = TRUE, decimals = 2)
 #voeg resultaten samen met coordinaten in een tabel en maak kolom namen
-alle_hoogtes_tabel <- data.frame(punten, alle_hoogtes)
-View(alle_hoogtes_tabel)
-colnames(alle_hoogtes_tabel) <- c("ID", "X", "Y", "elevation")
+alle_hoogtes_tabel_ruw <- data.frame(punten, alle_hoogtes)
+colnames(alle_hoogtes_tabel_ruw) <- c("ID", "X", "Y", "hoogte")
+#View(alle_hoogtes_tabel_ruw)
+
+#rond af alles af naar 2 decimalen
+alle_hoogtes_tabel <- alle_hoogtes_tabel_ruw
+is.num <- sapply(alle_hoogtes_tabel, is.numeric)
+alle_hoogtes_tabel[is.num] <- lapply(alle_hoogtes_tabel[is.num], round, 2)
+
 
 #sla hoogtes op als .csv bestand. Bestand word opgelsagen in je working directory (die je hierboven hebt ingesteld met setwd())
 write.table(alle_hoogtes_tabel, "coordinates.csv", sep=",", col.names = TRUE, row.names = FALSE)
-
-
 
 ##bereken individuele hoogte indien wenselijk
 
@@ -288,3 +293,4 @@ enkele_hoogte <- ahn_hoogtes(name = punten[my_ID, "ID"], X = punten[my_ID, "X"],
 enkele_hoogte_tabel <- data.frame(punten[my_ID,], enkele_hoogte)
 colnames(enkele_hoogte_tabel) <- c("ID", "X", "Y", "elevation")
 View(enkele_hoogte_tabel)
+
