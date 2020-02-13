@@ -1,5 +1,5 @@
 # rAHNextract
-Extract elevations of single points in The Netherlands from the Actueel Hoogtebestand Nederland (AHN) using the PDOK WCS/WFS geo services in R.
+Extract elevations of points in The Netherlands from the Actueel Hoogtebestand Nederland (AHN) using the PDOK WCS/WFS geo services in R.
 
 Works with AHN1, AHN2 and AHN3
 
